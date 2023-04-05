@@ -42,7 +42,6 @@ const shouldIgnoreFile = (file, ignorePattern) => {
     const path = file.webkitRelativePath;
     const isImage = file.type.startsWith('image/');
     return (
-        path.startsWith('.git/') ||
         isImage ||
         ignorePattern.test(path) ||
         IGNORED_PATHS.some((ignoredPath) => path.includes(ignoredPath))
