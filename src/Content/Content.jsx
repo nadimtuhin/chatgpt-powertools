@@ -1,32 +1,39 @@
 import React from 'react';
 
+export const FileList = ({filePaths, insertFiles}) => {
+  return (
+    <ul>
+      {filePaths.map((key) => (
+        <li key={key}>
+          <button
+            type="button"
+            onClick={() => insertFiles([key])}
+          >
+            insert
+          </button>
+          {key}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 const Content = ({fileContents, insertFiles}) => {
   const filePaths = Object.keys(fileContents)
   return (
     <div className="cp-p-4">
-      {/* Your content goes here */}
       {!!filePaths.length && (
         <div>
-          <p>File:</p>
+          <p>Files:</p>
           <button
             type="button"
-            onClick={
-              () => insertFiles(filePaths)
-            }>insert all
+            onClick={() => insertFiles(filePaths)}
+          >insert all
           </button>
-          <ul>
-            {filePaths.map((key) => (
-              <li key={key}>
-                <button
-                  type="button"
-                  onClick={() => insertFiles([key])}
-                >
-                  insert
-                </button>
-                {key}
-              </li>
-            ))}
-          </ul>
+          <FileList
+            filePaths={filePaths}
+            insertFiles={insertFiles}
+          />
         </div>
       )}
     </div>
