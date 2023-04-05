@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import ToggleButton from './ToggleButton';
 import Content from './Content';
 import Sidebar from './Sidebar';
@@ -8,6 +8,7 @@ import {handleFileInput} from "./utils/handleFileInput.jsx";
 const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [fileContents, setFileContents] = useState({});
+  const fileInputRef = useRef(null);
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -28,6 +29,12 @@ const App = () => {
       console.log(files);
     }
   }
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+    setFileContents({})
+  };
 
 
   return (
@@ -42,7 +49,9 @@ const App = () => {
             type="file"
             onChange={saveFileContents}
             webkitdirectory="true"
+            ref={fileInputRef}
           />
+          <button onClick={resetFileInput}>Reset</button>
         </div>
 
         <Content fileContents={fileContents} insertFiles={insertFiles}/>
