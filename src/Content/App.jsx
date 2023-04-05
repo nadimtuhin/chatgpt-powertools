@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import ToggleButton from './ToggleButton';
+import ToggleButton from '../components/ToggleButton.jsx';
 import Content from './Content';
 import Sidebar from './Sidebar';
 import {handleFileInput} from "./utils/handleFileInput.jsx";
