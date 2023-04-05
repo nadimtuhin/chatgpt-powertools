@@ -43,8 +43,7 @@ const App = () => {
       <div className={`cp-fixed cp-right-0 cp-top-0 ${sidebarVisible && 'cp-hidden'}`}>
         <ToggleButton toggle={toggleSidebar}/>
       </div>
-      <Sidebar visible={sidebarVisible}>
-        <ToggleButton toggle={toggleSidebar}/>
+      <Sidebar visible={sidebarVisible} toggle={toggleSidebar}>
         <FolderInput
           onChange={saveFileContents}
           fileInputRef={fileInputRef}
