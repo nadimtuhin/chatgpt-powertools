@@ -3,6 +3,7 @@ import ToggleButton from './ToggleButton';
 import Content from './Content';
 import Sidebar from './Sidebar';
 import {handleFileInput} from "./utils/handleFileInput.jsx";
+import {FolderInput} from "../components/FolderInput.jsx";
 
 
 const App = () => {
@@ -44,15 +45,11 @@ const App = () => {
       </div>
       <Sidebar visible={sidebarVisible}>
         <ToggleButton toggle={toggleSidebar}/>
-        <div className="cp-sidebar-header">
-          <input
-            type="file"
-            onChange={saveFileContents}
-            webkitdirectory="true"
-            ref={fileInputRef}
-          />
-          <button onClick={resetFileInput}>Reset</button>
-        </div>
+        <FolderInput
+          onChange={saveFileContents}
+          fileInputRef={fileInputRef}
+          onClick={resetFileInput}
+        />
 
         <Content fileContents={fileContents} insertFiles={insertFiles}/>
       </Sidebar>
