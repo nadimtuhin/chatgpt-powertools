@@ -19,6 +19,16 @@ const App = () => {
     });
   }
 
+  const insertFiles = (files) => {
+    if (Array.isArray(files)) {
+      files.forEach((file) => {
+        console.log(fileContents[file]);
+      });
+    } else {
+      console.log(files);
+    }
+  }
+
 
   return (
     <div className="cp-h-screen">
@@ -35,7 +45,7 @@ const App = () => {
           />
         </div>
 
-        <Content fileContents={fileContents}/>
+        <Content fileContents={fileContents} insertFiles={insertFiles}/>
       </Sidebar>
     </div>
   );
