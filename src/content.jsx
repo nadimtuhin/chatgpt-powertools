@@ -9,5 +9,5 @@ document.body.append(root)
 
 
 ReactDOM.createRoot(root).render(
-        <App />
+  <App/>
 )
