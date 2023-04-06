@@ -22,12 +22,15 @@ const getGitIgnoreFile = (files) => files.find((file) => file.name === '.gitigno
 const readContent = (file) => file.text();
 
 const generateIgnorePattern = (gitIgnoreContent) => {
-  const ignoreList = gitIgnoreContent
+  const ignoredPaths = gitIgnoreContent
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => line && !line.startsWith('#'))
-    .join('|');
-  return ignoreList ? `(${IGNORED_PATHS.join('|')}|${ignoreList})` : `(${IGNORED_PATHS.join('|')})`;
+
+  const escapedPaths = ignoredPaths.map(path => path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const regexString = `^(${escapedPaths.join('|')})$`;
+
+  return ignoredPaths ? `(${IGNORED_PATHS.join('|')}|${regexString})` : `(${IGNORED_PATHS.join('|')})`;
 };
 
 const readGitIgnore = async (files) => {

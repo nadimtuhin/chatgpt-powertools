@@ -3,7 +3,7 @@ import ToggleButton from '../components/ToggleButton.jsx';
 import Content from './Content';
 import Sidebar from './Sidebar';
 import {handleFolderInput} from "./utils/handleFolderInput.jsx";
-import {FolderInput} from "../components/FolderInput.jsx";
+import {FolderInput} from "../components/FolderInput/FolderInput.jsx";
 import {uuidV4} from "../utils/uuidV4.jsx";
 
 const App = () => {
