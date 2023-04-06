@@ -1,26 +1,36 @@
 import PropTypes from "prop-types";
-import { shortenPath } from "../utils/shortenPath.jsx";
 
-function FileTree({ tree, insertFiles }) {
+function FileTree({ tree, insertFiles, level = 0 }) {
+  const getPrefix = (level) => {
+    let prefix = "";
+    for (let i = 1; i < level; i++) {
+      prefix += "│ ";
+    }
+    if (level > 0) {
+      prefix += "├ ";
+    }
+    return prefix;
+  };
+
   return (
-    <ul>
+    <ul className="cp-list-none cp-m-0 cp-p-0">
       {tree.map((node) => (
-        <li key={node.name}>
+        <li key={node.name} className="cp-mb-1">
           {node.type === "file" ? (
             <>
+              <span>{getPrefix(level) + node.name}</span> &nbsp;
               <button
                 type="button"
-                className="cp-rounded cp-mr-2 cp-bg-indigo-600 cp-text-white cp-font-semibold"
+                className="cp-rounded px-1 cp-mr-2 cp-bg-indigo-600 cp-text-white cp-font-semibold"
                 onClick={() => insertFiles([node.key])}
               >
                 insert
               </button>
-              <span>{node.name}</span>
             </>
           ) : (
             <>
-              <span className="folder">{node.name}</span>
-              <FileTree tree={node.children} />
+              <span className="folder">{getPrefix(level) + node.name}</span>
+              <FileTree tree={node.children} level={level + 1} insertFiles={insertFiles} />
             </>
           )}
         </li>
@@ -28,6 +38,7 @@ function FileTree({ tree, insertFiles }) {
     </ul>
   );
 }
+
 
 export function FileList({ filePaths, insertFiles }) {
   // Convert the list of file paths into a tree structure
@@ -55,25 +66,6 @@ export function FileList({ filePaths, insertFiles }) {
 
   return <FileTree tree={tree} insertFiles={insertFiles} />;
 }
-
-// export function FileList({filePaths, insertFiles}) {
-//   return (
-//     <ul className="cp-list-inside cp-list-disc cp-pl-4 cp-mb-4">
-//       {filePaths.map((key) => (
-//         <li key={key} className="cp-flex cp-items-center cp-mb-2">
-//           <button
-//             type="button"
-//             className="cp-rounded cp-py-2 cp-px-4 cp-mr-2 cp-bg-indigo-600 cp-text-white cp-font-semibold"
-//             onClick={() => insertFiles([key])}
-//           >
-//             Insert
-//           </button>
-//           <span className="cp-truncate">{shortenPath(key)}</span>
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// }
 
 FileList.propTypes = {
   filePaths: PropTypes.arrayOf(PropTypes.string),

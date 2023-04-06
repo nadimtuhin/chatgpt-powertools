@@ -5,7 +5,7 @@ const Sidebar = ({ children, visible, toggle }) => {
   return (
     <Draggable handle=".cp-sidebar-header">
       <aside
-        style={{ width: "50vh", height: "50vh" }}
+        style={{ width: "50vh", height: "70vh" }}
         className={`${
           !visible ? "cp-hidden" : ""
         } cp-fixed cp-p-2 cp-right-0 cp-top-0  cp-bg-gray-200 cp-overflow-y-scroll`}
