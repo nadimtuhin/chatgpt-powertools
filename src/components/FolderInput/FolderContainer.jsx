@@ -1,4 +1,4 @@
-import {FileList} from "./FileList.jsx";
+import {FileList} from "../FileList.jsx";
 import * as PropTypes from "prop-types";
 import React from "react";
 
