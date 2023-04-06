@@ -6,6 +6,10 @@ import {handleFolderInput} from "./utils/handleFolderInput.jsx";
 import {FolderInput} from "../components/FolderInput/FolderInput.jsx";
 import {uuidV4} from "../utils/uuidV4.jsx";
 
+function getChatGPTInput() {
+  return document.querySelector('textarea[data-id]');
+}
+
 const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [fileContents, setFileContents] = useState({});
@@ -27,13 +31,19 @@ const App = () => {
     });
   }
 
+  function appendValueToCGPTInput(content) {
+    if (!getChatGPTInput()) return
+    getChatGPTInput().value +=
+      JSON.stringify(content, null, 2);
+  }
+
   const insertFiles = (files) => {
-    document.querySelector("textarea[data-id]").focus()
+    getChatGPTInput()?.focus();
     if (Array.isArray(files)) {
       files.forEach((file) => {
-        document.querySelector('textarea[data-id]').value += JSON.stringify(fileContents[file], null, 2);
+        appendValueToCGPTInput(fileContents[file]);
       });
-      document.querySelector("textarea[data-id]").focus()
+      getChatGPTInput()?.focus();
     } else {
       console.log(files);
     }
