@@ -13,7 +13,7 @@ function FileTree({ tree, insertFiles }) {
                 className="cp-rounded cp-mr-2 cp-bg-indigo-600 cp-text-white cp-font-semibold"
                 onClick={() => insertFiles([node.key])}
               >
-                +
+                insert
               </button>
               <span>{node.name}</span>
             </>
@@ -52,8 +52,6 @@ export function FileList({ filePaths, insertFiles }) {
     }
     return acc;
   }, []);
-
-  console.log(tree);
 
   return <FileTree tree={tree} insertFiles={insertFiles} />;
 }

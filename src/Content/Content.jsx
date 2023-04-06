@@ -1,5 +1,5 @@
 import React from "react";
-import { FolderContainer } from "../components/FolderInput/FolderContainer.jsx";
+import { FolderContainer } from "../components/FolderContainer.jsx";
 
 const Content = ({ fileContents, insertFiles }) => {
   const filePaths = Object.keys(fileContents);
