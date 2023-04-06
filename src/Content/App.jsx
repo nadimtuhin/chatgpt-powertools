@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import ToggleButton from '../components/ToggleButton.jsx';
 import Content from './Content';
 import Sidebar from './Sidebar';
-import {handleFileInput} from "./utils/handleFileInput.jsx";
+import {handleFolderInput} from "./utils/handleFolderInput.jsx";
 import {FolderInput} from "../components/FolderInput.jsx";
 import {uuidV4} from "../utils/uuidV4.jsx";
 
@@ -22,7 +22,7 @@ const App = () => {
   };
 
   const saveFileContents = (event) => {
-    handleFileInput(event).then((newFileContents) => {
+    handleFolderInput(event).then((newFileContents) => {
       setFileContents({...fileContents, ...newFileContents});
     });
   }

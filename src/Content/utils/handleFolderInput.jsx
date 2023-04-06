@@ -68,7 +68,7 @@ const readFiles = async (files, ignorePattern) => {
   return fileContents.reduce((contents, [path, content]) => ({...contents, [path]: content}), {});
 };
 
-export const handleFileInput = async (event) => {
+export const handleFolderInput = async (event) => {
   const files = Array.from(event.target.files);
   const ignorePattern = await readGitIgnore(files);
   return readFiles(files, new RegExp(ignorePattern));
