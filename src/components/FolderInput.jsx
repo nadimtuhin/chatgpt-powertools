@@ -2,13 +2,17 @@ import * as PropTypes from "prop-types";
 import React from "react";
 
 export function FolderInput(props) {
+  const {fileInputs, addFileInput} = props;
   return <div className="cp-sidebar-header">
-    <input
-      type="file"
-      onChange={props.onChange}
-      webkitdirectory="true"
-      ref={props.fileInputRef}
-    />
+    {fileInputs.map((fileInput) => (
+      <input
+        key={fileInput.key}
+        type="file"
+        onChange={props.onChange}
+        webkitdirectory="true"
+      />
+    ))}
+    <button onClick={addFileInput}>Add another folder</button>
     <button onClick={props.onClick}>Reset</button>
   </div>;
 }

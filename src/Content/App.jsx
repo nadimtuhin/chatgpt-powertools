@@ -4,33 +4,42 @@ import Content from './Content';
 import Sidebar from './Sidebar';
 import {handleFileInput} from "./utils/handleFileInput.jsx";
 import {FolderInput} from "../components/FolderInput.jsx";
-
+import {uuidV4} from "../utils/uuidV4.jsx";
 
 const App = () => {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const [fileContents, setFileContents] = useState({});
   const fileInputRef = useRef(null);
+  const [fileInputs, setFileInputs] = useState([{key: uuidV4(), value: null}]);
+
+  const addFileInput = () => {
+    const newKey = uuidV4();
+    setFileInputs([...fileInputs, {key: newKey, value: null}]);
+  };
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
 
   const saveFileContents = (event) => {
-    handleFileInput(event).then((fileContents) => {
-      setFileContents(fileContents);
+    handleFileInput(event).then((newFileContents) => {
+      setFileContents({...fileContents, ...newFileContents});
     });
   }
 
   const insertFiles = (files) => {
+    document.querySelector("textarea[data-id]").focus()
     if (Array.isArray(files)) {
       files.forEach((file) => {
-        console.log(fileContents[file]);
+        document.querySelector('textarea[data-id]').value += JSON.stringify(fileContents[file], null, 2);
       });
+      document.querySelector("textarea[data-id]").focus()
     } else {
       console.log(files);
     }
   }
   const resetFileInput = () => {
+    setFileInputs([{key: uuidV4(), value: null}]);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -46,8 +55,9 @@ const App = () => {
       <Sidebar visible={sidebarVisible} toggle={toggleSidebar}>
         <FolderInput
           onChange={saveFileContents}
-          fileInputRef={fileInputRef}
           onClick={resetFileInput}
+          fileInputs={fileInputs}
+          addFileInput={addFileInput}
         />
 
         <Content fileContents={fileContents} insertFiles={insertFiles}/>
