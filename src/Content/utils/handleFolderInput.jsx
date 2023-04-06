@@ -1,41 +1,45 @@
 const IGNORED_PATHS = [
-  '/.git/',
-  '/.vscode/',
-  '/node_modules/',
-  '/dist/',
-  '/build/',
-  '/.next/',
-  '/.cache/',
-  '/.yarn/',
-  '/.pnp/',
-  '/.pnp.js',
-  '/.pnp.cjs',
-  '/.pnp.mjs',
-  '/.idea/',
-  '.DS_Store',
-  'yarn.lock',
+  "/.git/",
+  "/.vscode/",
+  "/node_modules/",
+  "/dist/",
+  "/build/",
+  "/.next/",
+  "/.cache/",
+  "/.yarn/",
+  "/.pnp/",
+  "/.pnp.js",
+  "/.pnp.cjs",
+  "/.pnp.mjs",
+  "/.idea/",
+  ".DS_Store",
+  "yarn.lock",
 ];
 
-
-const getGitIgnoreFile = (files) => files.find((file) => file.name === '.gitignore');
+const getGitIgnoreFile = (files) =>
+  files.find((file) => file.name === ".gitignore");
 
 const readContent = (file) => file.text();
 
 const generateIgnorePattern = (gitIgnoreContent) => {
   const ignoredPaths = gitIgnoreContent
-    .split('\n')
+    .split("\n")
     .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith('#'))
+    .filter((line) => line && !line.startsWith("#"));
 
-  const escapedPaths = ignoredPaths.map(path => path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const regexString = `^(${escapedPaths.join('|')})$`;
+  const escapedPaths = ignoredPaths.map((path) =>
+    path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  );
+  const regexString = `^(${escapedPaths.join("|")})$`;
 
-  return ignoredPaths ? `(${IGNORED_PATHS.join('|')}|${regexString})` : `(${IGNORED_PATHS.join('|')})`;
+  return ignoredPaths
+    ? `(${IGNORED_PATHS.join("|")}|${regexString})`
+    : `(${IGNORED_PATHS.join("|")})`;
 };
 
 const readGitIgnore = async (files) => {
   const gitIgnoreFile = getGitIgnoreFile(files);
-  if (!gitIgnoreFile) return `(${IGNORED_PATHS.join('|')})`;
+  if (!gitIgnoreFile) return `(${IGNORED_PATHS.join("|")})`;
 
   const content = await readContent(gitIgnoreFile);
   return generateIgnorePattern(content);
@@ -43,7 +47,7 @@ const readGitIgnore = async (files) => {
 
 const shouldIgnoreFile = (file, ignorePattern) => {
   const path = file.webkitRelativePath;
-  const isImage = file.type.startsWith('image/');
+  const isImage = file.type.startsWith("image/");
   return (
     isImage ||
     ignorePattern.test(path) ||
@@ -68,7 +72,10 @@ const filterFiles = (files, ignorePattern) => {
 const readFiles = async (files, ignorePattern) => {
   const filteredFiles = filterFiles(files, ignorePattern);
   const fileContents = await Promise.all(filteredFiles.map(readFileContent));
-  return fileContents.reduce((contents, [path, content]) => ({...contents, [path]: content}), {});
+  return fileContents.reduce(
+    (contents, [path, content]) => ({ ...contents, [path]: content }),
+    {}
+  );
 };
 
 export const handleFolderInput = async (event) => {

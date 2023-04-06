@@ -1,8 +1,8 @@
-import React from 'react';
-import {FolderContainer} from "../components/FolderInput/FolderContainer.jsx";
+import React from "react";
+import { FolderContainer } from "../components/FolderInput/FolderContainer.jsx";
 
-const Content = ({fileContents, insertFiles}) => {
-  const filePaths = Object.keys(fileContents)
+const Content = ({ fileContents, insertFiles }) => {
+  const filePaths = Object.keys(fileContents);
   return (
     <div className="cp-p-4">
       {!!filePaths.length && (
