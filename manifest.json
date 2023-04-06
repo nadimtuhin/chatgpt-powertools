@@ -5,11 +5,8 @@
   "action": { "default_popup": "index.html" },
   "content_scripts": [
     {
-      "matches": [
-        "https://chat.openai.com/*"
-      ],
+      "matches": ["https://chat.openai.com/*"],
       "js": ["src/content.jsx"]
     }
   ]
 }
-
