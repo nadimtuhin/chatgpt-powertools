@@ -21,7 +21,7 @@ export function FolderInput(props) {
         Add another folder
       </button>
       <button
-        className="cp-rounded cp-py-2 cp-px-4 cp-mr-2 cp-bg-gray-300"
+        className="cp-rounded cp-py-2 cp-px-4 cp-mr-2 cp-bg-indigo-600 cp-text-white cp-font-semibold"
         onClick={props.onClick}
       >
         Reset
