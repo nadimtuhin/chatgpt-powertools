@@ -66,7 +66,7 @@ const App = () => {
   };
 
   return (
-    <div className="cp-h-screen">
+    <div className="">
       <div
         className={`cp-fixed cp-right-0 cp-top-0 ${
           sidebarVisible && "cp-hidden"
