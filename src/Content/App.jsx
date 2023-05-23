@@ -1,19 +1,37 @@
-import React, { useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import ToggleButton from "../components/ToggleButton.jsx";
 import Content from "./Content";
 import Sidebar from "./Sidebar";
 import { handleFolderInput } from "../components/FolderInput/utils/handleFolderInput.jsx";
 import { FolderInput } from "../components/FolderInput/FolderInput.jsx";
 import { uuidV4 } from "../utils/uuidV4.jsx";
+import {
+  appendValueToCGPTInput,
+  getChatGPTInput, triggerKeyPress,
+} from "../utils/chatGPTInterface.js";
 
-function getChatGPTInput() {
-  return document.querySelector("textarea[data-id]");
-}
+const useStateWithLocalStorage = (localStorageKey, initialValue) => {
+  const [value, setValue] = useState(
+    () => {
+      const storedValue = localStorage.getItem(localStorageKey);
+      return storedValue !== null ? JSON.parse(storedValue) : initialValue;
+    }
+  );
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(value));
+    console.log("setting local storage", localStorage.getItem(localStorageKey))
+  }, [localStorageKey, value]);
+
+  return [value, setValue];
+};
 
 const App = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useStateWithLocalStorage(
+    'sidebarVisible',
+    true
+  );
   const [fileContents, setFileContents] = useState({});
-  const fileInputRef = useRef(null);
   const [fileInputs, setFileInputs] = useState([
     { key: uuidV4(), value: null },
   ]);
@@ -33,27 +51,17 @@ const App = () => {
     });
   };
 
-  function appendValueToCGPTInput(content) {
-    if (!getChatGPTInput()) return;
-    getChatGPTInput().value += JSON.stringify(content, null, 2);
-  }
-
   const insertFiles = (files) => {
     getChatGPTInput()?.focus();
     if (Array.isArray(files)) {
       files.forEach((file) => {
-        appendValueToCGPTInput(fileContents[file]);
+        appendValueToCGPTInput(`// ${file}` + "\n" + fileContents[file]);
       });
-      getChatGPTInput()?.focus();
-    } else {
-      console.log(files);
+      triggerKeyPress();
     }
   };
   const resetFileInput = () => {
     setFileInputs([{ key: uuidV4(), value: null }]);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
     setFileContents({});
   };
 
