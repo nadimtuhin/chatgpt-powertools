@@ -12,7 +12,7 @@
 ## Installation
 https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612
 
-- Download the zip file from the latest release and unzip it.
+- Download the [dist.zip](https://github.com/nadimtuhin/chatgpt-powertools/blob/main/dist.zip) file from the latest release and unzip it.
 - Go to chrome extensions
 - Turn on developer mode
 - Load unpacked -> select the unzipped folder
