@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 *.pem
 *.crx
+!dist.zip
