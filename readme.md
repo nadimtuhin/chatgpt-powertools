@@ -1,16 +1,17 @@
 # Chatgpt powertools
 
 ## Installation
+https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612
 
-```bash
-yarn install
-```
+- Download the zip file from the latest release and unzip it.
+- Then go to chrome extensions -> load unpacked -> select the unzipped folder
+
 
 ## Development setup
-- run yarn dev
 - go to chrome extensions -> load unpacked -> show the dist folder
 - then open chatgpt website
 ```bash
+yarn install
 yarn dev
 ```
 
