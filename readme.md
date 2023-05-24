@@ -1,12 +1,13 @@
 # Chatgpt powertools
 
 ## Features
+
 - [x] Upload files, folder
-- [] autocomplete prompts
-- [] suggest prompts
-- [] download conversation
-- [] download a response
-- [] upload images as base64
+- [ ] autocomplete prompts
+- [ ] suggest prompts
+- [ ] download conversation
+- [ ] download a response
+- [ ] upload images as base64
 
 ## Installation
 https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612
