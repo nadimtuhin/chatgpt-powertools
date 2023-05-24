@@ -6,9 +6,13 @@
 yarn install
 ```
 
-## Usage
-after running yarn dev go to chrome extensions -> load unpacked -> show the dist folder
-and then open chatgpt website
+## Development setup
+- run yarn dev
+- go to chrome extensions -> load unpacked -> show the dist folder
+- then open chatgpt website
 ```bash
 yarn dev
 ```
+
+## Screenshots
+![screenshot](./screenshot.png)
