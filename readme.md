@@ -1,33 +1,37 @@
-# Chatgpt powertools
+# ChatGPT Powertools
+
+A Chrome extension that adds extra functionality to ChatGPT.
 
 ## Features
 
-- [x] Upload files, folder
-- [ ] autocomplete prompts
-- [ ] suggest prompts
-- [ ] download conversation
-- [ ] download a response
-- [ ] upload images as base64
+- [x] Upload files and folders
+- [ ] Autocomplete prompts
+- [ ] Suggest prompts
+- [ ] Download conversation
+- [ ] Download a response
+- [ ] Upload images as base64
 
 ## Installation
-https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612
 
-- Download the [dist.zip](https://github.com/nadimtuhin/chatgpt-powertools/blob/main/dist.zip) file from the latest release and unzip it.
-- Go to chrome extensions
-- Turn on developer mode
-- Load unpacked -> select the unzipped folder
+1. Download [dist.zip](https://github.com/nadimtuhin/chatgpt-powertools/blob/main/dist.zip) from the latest release and unzip it.
+2. Go to `chrome://extensions`
+3. Enable developer mode
+4. Click "Load unpacked" and select the unzipped folder
 
+For detailed steps: https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612
 
-## Development setup
+## Development Setup
 
-- go to chrome extensions
-- turn on developer mode
-- load unpacked -> show the dist folder
-- then open chatgpt website
+1. Go to `chrome://extensions`
+2. Enable developer mode
+3. Click "Load unpacked" and select the `dist` folder
+4. Open the ChatGPT website
+
 ```bash
 yarn install
 yarn dev
 ```
 
 ## Screenshots
+
 ![screenshot](./screenshot.png)
