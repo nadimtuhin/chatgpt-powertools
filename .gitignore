@@ -25,3 +25,19 @@ dist-ssr
 *.pem
 *.crx
 !dist.zip
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Yarn v2+
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
