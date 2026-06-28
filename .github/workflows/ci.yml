@@ -17,13 +17,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install
 
       - name: Build extension
-        run: yarn build
+        run: npm run build
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
