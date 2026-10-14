@@ -1,0 +1,2 @@
+{ "banners": { "h-start": "GET STARTED", "h-how": "HOW IT WORKS", "h-dev": "FOR DEVELOPERS" },
+  "hero": { "kicker": "CHROME EXTENSION · CHATGPT", "title": "ChatGPT Powertools", "tagline": "Paste whole files and folders into a chat" } }
