@@ -1,3 +1,5 @@
+import { isGitignored, parseGitignore } from "../../../utils/gitignore.js";
+
 const IGNORED_PATHS = [
   "/.git/",
   "/.vscode/",
@@ -16,41 +18,26 @@ const IGNORED_PATHS = [
   "yarn.lock",
 ];
 
+// Only the .gitignore at the root of the picked folder ("root/.gitignore").
 const getGitIgnoreFile = (files) =>
-  files.find((file) => file.name === ".gitignore");
-
-const readContent = (file) => file.text();
-
-const generateIgnorePattern = (gitIgnoreContent) => {
-  const ignoredPaths = gitIgnoreContent
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("#"));
-
-  const escapedPaths = ignoredPaths.map((path) =>
-    path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  files.find(
+    (file) =>
+      file.webkitRelativePath.split("/").length === 2 &&
+      file.name === ".gitignore"
   );
-  const regexString = `^(${escapedPaths.join("|")})$`;
-
-  return ignoredPaths
-    ? `(${IGNORED_PATHS.join("|")}|${regexString})`
-    : `(${IGNORED_PATHS.join("|")})`;
-};
 
 const readGitIgnore = async (files) => {
   const gitIgnoreFile = getGitIgnoreFile(files);
-  if (!gitIgnoreFile) return `(${IGNORED_PATHS.join("|")})`;
-
-  const content = await readContent(gitIgnoreFile);
-  return generateIgnorePattern(content);
+  if (!gitIgnoreFile) return [];
+  return parseGitignore(await gitIgnoreFile.text());
 };
 
-const shouldIgnoreFile = (file, ignorePattern) => {
+const shouldIgnoreFile = (file, gitignoreRules) => {
   const path = file.webkitRelativePath;
   const isImage = file.type.startsWith("image/");
   return (
     isImage ||
-    ignorePattern.test(path) ||
+    isGitignored(path, gitignoreRules) ||
     IGNORED_PATHS.some((ignoredPath) => path.includes(ignoredPath))
   );
 };
@@ -65,12 +52,12 @@ const readFileContent = (file) => {
   });
 };
 
-const filterFiles = (files, ignorePattern) => {
-  return files.filter((file) => !shouldIgnoreFile(file, ignorePattern));
+const filterFiles = (files, gitignoreRules) => {
+  return files.filter((file) => !shouldIgnoreFile(file, gitignoreRules));
 };
 
-const readFiles = async (files, ignorePattern) => {
-  const filteredFiles = filterFiles(files, ignorePattern);
+const readFiles = async (files, gitignoreRules) => {
+  const filteredFiles = filterFiles(files, gitignoreRules);
   const fileContents = await Promise.all(filteredFiles.map(readFileContent));
   return fileContents.reduce(
     (contents, [path, content]) => ({ ...contents, [path]: content }),
@@ -80,6 +67,6 @@ const readFiles = async (files, ignorePattern) => {
 
 export const handleFolderInput = async (event) => {
   const files = Array.from(event.target.files);
-  const ignorePattern = await readGitIgnore(files);
-  return readFiles(files, new RegExp(ignorePattern));
+  const gitignoreRules = await readGitIgnore(files);
+  return readFiles(files, gitignoreRules);
 };

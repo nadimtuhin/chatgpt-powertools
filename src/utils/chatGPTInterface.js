@@ -1,33 +1,31 @@
+// chatgpt.com names its composer "prompt"; chat.openai.com used data-id.
+const COMPOSER_SELECTOR = 'textarea[name="prompt"], textarea[data-id]';
+
 export function getChatGPTInput() {
-  return document.querySelector("textarea[data-id]");
+  return document.querySelector(COMPOSER_SELECTOR);
+}
+
+// Framework-controlled inputs ignore `input.value = x`; the native setter
+// updates the value the framework tracks.
+function setNativeValue(textarea, value) {
+  const setter = Object.getOwnPropertyDescriptor(
+    Object.getPrototypeOf(textarea),
+    "value"
+  )?.set;
+  if (setter) setter.call(textarea, value);
+  else textarea.value = value;
 }
 
 export function appendValueToCGPTInput(content) {
-  if (!getChatGPTInput()) return;
-  getChatGPTInput().value += content;
+  const textarea = getChatGPTInput();
+  if (!textarea) return;
+  setNativeValue(textarea, textarea.value + content);
 }
 
 export function triggerKeyPress() {
-  // Get the textarea element with the data-id attribute
-  const textarea = document.querySelector('textarea[data-id]');
+  const textarea = getChatGPTInput();
+  if (!textarea) return;
 
-  // Create a new mouse click event
-  const input = new Event('input', {
-    bubbles: true,
-  });
-
-  // Create a new mouse click event
-  const change = new Event('change', {
-    bubbles: true,
-  });
-
-  // Dispatch the mouse click event on the textarea element
-  textarea.dispatchEvent(input);
-  textarea.dispatchEvent(change);
+  textarea.dispatchEvent(new Event("input", { bubbles: true }));
+  textarea.dispatchEvent(new Event("change", { bubbles: true }));
 }
-
-
-// Add an event listener to the textarea to handle the keypress event
-document.querySelector('textarea[data-id]').addEventListener('keypress', function(event) {
-  console.log('Key pressed:', event.key, event.charCode);
-});
