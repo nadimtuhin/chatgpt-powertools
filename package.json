@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test src/utils/chatGPTInterface.test.js src/utils/gitignore.test.js"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
