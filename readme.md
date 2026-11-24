@@ -12,7 +12,7 @@
 
 <br>
 
-A Chrome extension that adds a sidebar to ChatGPT. You choose files or a folder, then insert the ones you want into the message box, each with its path on top. It is an early version: only file and folder upload works so far, and the manifest only matches `chat.openai.com`.
+A Chrome extension that adds a sidebar to ChatGPT. You choose files or a folder, then insert the ones you want into the message box, each with its path on top. It is an early version: only file and folder upload works so far. It runs on `chatgpt.com` and `chat.openai.com`.
 
 <br>
 
@@ -28,7 +28,7 @@ A Chrome extension that adds a sidebar to ChatGPT. You choose files or a folder,
 2. Turn on Developer mode.
 3. Click "Load unpacked" and choose the `dist` folder.
 
-**3. Heads up:** ChatGPT moved to chatgpt.com and this build only matches chat.openai.com, so the sidebar won't appear until `manifest.json` `matches` is updated and the extension is rebuilt.
+**3. Heads up:** `dist.zip` may predate chatgpt.com support. If the sidebar doesn't appear, build `dist` yourself with `npm install && npm run build`.
 
 Stuck? [How to install Chrome extensions manually from GitHub](https://dev.to/ben/how-to-install-chrome-extensions-manually-from-github-1612).
 
